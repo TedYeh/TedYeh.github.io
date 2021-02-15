@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/TedYeh.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/TedYeh.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/TedYeh.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/TedYeh.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/TedYeh.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tedyeh.github.io","root":"/TedYeh.github.io/","images":"/TedYeh.github.io/images","scheme":"Muse","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/TedYeh.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Lecture 4 Classification在Classfication中，我們輸入一個X，而model告訴我們X的類別ex. 機器翻譯、文法偵錯、臉部表情偵測…等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML Lecture - Classification &amp; Logistic Regression">
+<meta property="og:url" content="https://tedyeh.github.io/2021/02/16/ML-Lecture-Classification-1/index.html">
+<meta property="og:site_name" content="About Me">
+<meta property="og:description" content="Lecture 4 Classification在Classfication中，我們輸入一個X，而model告訴我們X的類別ex. 機器翻譯、文法偵錯、臉部表情偵測…等">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/3PDDWd7.png">
+<meta property="og:image" content="https://i.imgur.com/PGgqLwz.png">
+<meta property="og:image" content="https://i.imgur.com/EKEi1kG.png">
+<meta property="og:image" content="https://i.imgur.com/yc07fRR.png">
+<meta property="og:image" content="https://i.imgur.com/xEiD5P8.png">
+<meta property="og:image" content="https://i.imgur.com/cjh4lGp.png">
+<meta property="og:image" content="https://i.imgur.com/ting6eJ.png">
+<meta property="og:image" content="https://i.imgur.com/giY92h3.png">
+<meta property="og:image" content="https://i.imgur.com/Qg6Q9bj.png">
+<meta property="og:image" content="https://i.imgur.com/VR5KvNW.png">
+<meta property="og:image" content="https://i.imgur.com/E5xklym.png">
+<meta property="og:image" content="https://i.imgur.com/SSFqGXU.png">
+<meta property="og:image" content="https://i.imgur.com/3T3VdBB.png">
+<meta property="og:image" content="https://i.imgur.com/zz9Iki7.png">
+<meta property="og:image" content="https://i.imgur.com/tquUVzm.png">
+<meta property="og:image" content="https://i.imgur.com/IspeQUG.png">
+<meta property="og:image" content="https://i.imgur.com/zlLaB7V.png">
+<meta property="og:image" content="https://i.imgur.com/9QOa45k.png">
+<meta property="og:image" content="https://i.imgur.com/y92DAXi.png">
+<meta property="og:image" content="https://i.imgur.com/7o8kfyX.png">
+<meta property="og:image" content="https://i.imgur.com/u0YNy0Q.png">
+<meta property="og:image" content="https://i.imgur.com/gJSANQ1.png">
+<meta property="og:image" content="https://i.imgur.com/TxjMw0i.png">
+<meta property="og:image" content="https://i.imgur.com/tHR8IYW.png">
+<meta property="og:image" content="https://i.imgur.com/6fuJ2On.png">
+<meta property="og:image" content="https://i.imgur.com/Zi4bcLm.png">
+<meta property="og:image" content="https://i.imgur.com/dxd6k0o.png">
+<meta property="og:image" content="https://i.imgur.com/KM2cR5B.png">
+<meta property="og:image" content="https://i.imgur.com/wzQBvmf.png">
+<meta property="og:image" content="https://i.imgur.com/al3Xu4E.png">
+<meta property="og:image" content="https://i.imgur.com/CPdoOEM.png">
+<meta property="og:image" content="https://i.imgur.com/kHgsogx.png">
+<meta property="og:image" content="https://i.imgur.com/xCye0YO.png">
+<meta property="og:image" content="https://i.imgur.com/SlO2fj3.png">
+<meta property="og:image" content="https://i.imgur.com/eHP27ys.png">
+<meta property="og:image" content="https://i.imgur.com/fbKKoXb.png">
+<meta property="og:image" content="https://i.imgur.com/vLamyCp.png">
+<meta property="og:image" content="https://i.imgur.com/KEbg8BQ.png">
+<meta property="og:image" content="https://i.imgur.com/YW2E6Lb.png">
+<meta property="og:image" content="https://i.imgur.com/fl5PAeq.png">
+<meta property="og:image" content="https://i.imgur.com/G01lWle.png">
+<meta property="og:image" content="https://i.imgur.com/m7una26.png">
+<meta property="article:published_time" content="2021-02-15T16:28:06.000Z">
+<meta property="article:modified_time" content="2021-02-15T16:35:43.186Z">
+<meta property="article:author" content="Ted Yeh">
+<meta property="article:tag" content="Home Page">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/3PDDWd7.png">
+
+
+<link rel="canonical" href="https://tedyeh.github.io/2021/02/16/ML-Lecture-Classification-1/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+<title>ML Lecture - Classification & Logistic Regression | About Me</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/TedYeh.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">About Me</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">關於我</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-4-Classification"><span class="nav-number">1.</span> <span class="nav-text">Lecture 4 Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#example-of-Classification-Pokemon"><span class="nav-number">1.1.</span> <span class="nav-text">example of Classification(Pokemon)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-not-Regression"><span class="nav-number">1.2.</span> <span class="nav-text">Why not Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ideal-Alternatives"><span class="nav-number">1.3.</span> <span class="nav-text">Ideal Alternatives</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E6%A9%9F%E7%8E%87%E6%A8%A1%E5%9E%8B%E5%AF%A6%E7%8F%BE"><span class="nav-number">1.4.</span> <span class="nav-text">以機率模型實現</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#example"><span class="nav-number">1.5.</span> <span class="nav-text">example</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximum-Likelihood"><span class="nav-number">1.6.</span> <span class="nav-text">Maximum Likelihood</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Now-we-can-do-classification"><span class="nav-number">1.7.</span> <span class="nav-text">Now we can do classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How%E2%80%99s-the-results"><span class="nav-number">1.8.</span> <span class="nav-text">How’s the results?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifying-Model"><span class="nav-number">1.9.</span> <span class="nav-text">Modifying Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifying-Model-2"><span class="nav-number">1.10.</span> <span class="nav-text">Modifying Model-2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifying-Model-Result"><span class="nav-number">1.11.</span> <span class="nav-text">Modifying Model-Result</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Three-Steps-Review"><span class="nav-number">1.12.</span> <span class="nav-text">Three Steps(Review)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Posterior-Probability"><span class="nav-number">1.13.</span> <span class="nav-text">Posterior Probability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%9C%E5%85%85"><span class="nav-number">1.14.</span> <span class="nav-text">補充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-5-Logistic-Regression"><span class="nav-number">2.</span> <span class="nav-text">Lecture 5 Logistic Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1%EF%BC%9AFunction-Set"><span class="nav-number">2.1.</span> <span class="nav-text">Step 1：Function Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-Goodness-of-a-Function"><span class="nav-number">2.2.</span> <span class="nav-text">Step 2: Goodness of a Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comparison%EF%BC%8DLogistic-v-s-Linear"><span class="nav-number">2.3.</span> <span class="nav-text">Comparison－Logistic v.s. Linear</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Limitation-of-Logistic-Regression"><span class="nav-number">2.4.</span> <span class="nav-text">Limitation of Logistic Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XOR-Problem"><span class="nav-number">2.5.</span> <span class="nav-text">XOR Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#That%E2%80%99s-Deep-Learning"><span class="nav-number">2.6.</span> <span class="nav-text">That’s Deep Learning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%9C%E5%85%85%EF%BC%9APerceptron-v-s-Logistic-Regression"><span class="nav-number">3.</span> <span class="nav-text">補充：Perceptron v.s. Logistic Regression</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Ted Yeh</p>
+  <div class="site-description" itemprop="description">我的個人頁面</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/TedYeh.github.io/archives">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://tedyeh.github.io/2021/02/16/ML-Lecture-Classification-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/TedYeh.github.io/images/avatar.gif">
+      <meta itemprop="name" content="Ted Yeh">
+      <meta itemprop="description" content="我的個人頁面">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="About Me">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ML Lecture - Classification & Logistic Regression
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2021-02-16 00:28:06 / 修改時間：00:35:43" itemprop="dateCreated datePublished" datetime="2021-02-16T00:28:06+08:00">2021-02-16</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="文章字數">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">文章字數：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="所需閱讀時間">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
+      <span>5 分鐘</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Lecture-4-Classification"><a href="#Lecture-4-Classification" class="headerlink" title="Lecture 4 Classification"></a>Lecture 4 Classification</h2><p>在Classfication中，我們輸入一個X，而model告訴我們X的類別<br>ex. 機器翻譯、文法偵錯、臉部表情偵測…等</p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/3PDDWd7.png"></p>
+<p>得到寶可夢的特徵並數值化<br><img src="https://i.imgur.com/PGgqLwz.png"></p>
+<h3 id="example-of-Classification-Pokemon"><a href="#example-of-Classification-Pokemon" class="headerlink" title="example of Classification(Pokemon)"></a>example of Classification(Pokemon)</h3><p><img src="https://i.imgur.com/EKEi1kG.png"></p>
+<p>以二分類為例，我們可以使用Regression。<br>輸出為{1, -1}，即輸出為1到-1之間，接近1為class1，接近-1為class2。則我們以0為分界，若輸入大於0為class1，反之則為class2。<br><img src="https://i.imgur.com/yc07fRR.png"></p>
+<h3 id="Why-not-Regression"><a href="#Why-not-Regression" class="headerlink" title="Why not Regression"></a>Why not Regression</h3><p>在Linear Regression中，做Binary Classification是可行的。<br>但若資料是分群的(如右圖Class1)，則會造成model收斂於紫線(為了降低誤差)。<br><img src="https://i.imgur.com/xEiD5P8.png"></p>
+<h3 id="Ideal-Alternatives"><a href="#Ideal-Alternatives" class="headerlink" title="Ideal Alternatives"></a>Ideal Alternatives</h3><p>先定義一function f(x)，裡面有一g(x)。將x帶入g(x)，若g(x)&gt;0為類別1，否則為類別0。<br>定義Loss function L(f):f(x)分類錯誤的次數。<br><img src="https://i.imgur.com/cjh4lGp.png"></p>
+<h3 id="以機率模型實現"><a href="#以機率模型實現" class="headerlink" title="以機率模型實現"></a>以機率模型實現</h3><p>以箱子抽球為例<br><img src="https://i.imgur.com/ting6eJ.png"></p>
+<p>將Box變為class，給一個x(要分類的對象)，它屬於某個class的機率為何，我們需要知道：</p>
+<ul>
+<li>$P(C1)$:從class1抽出來的機率</li>
+<li>$P(C2)$:從class2抽出來的機率</li>
+<li>$P(x|C1)$:從class1抽出x的機率</li>
+<li>$P(x|C2)$:從class2抽出x的機率</li>
+</ul>
+<p>有了上面四種機率，就可以計算出$P(C1|x)$的機率(x是class1的機率)<br><img src="https://i.imgur.com/giY92h3.png"></p>
+<h3 id="example"><a href="#example" class="headerlink" title="example"></a>example</h3><p><img src="https://i.imgur.com/Qg6Q9bj.png"></p>
+<p>如何判斷一個未出現在training set的data的機率?<br><img src="https://i.imgur.com/VR5KvNW.png"></p>
+<p>假設從Gaussian中取出79個點，現在給一個新的點(不存在79個資料集中的新資料)，就可以利用Gaussian Distribution function來計算出抽到該點的機率。</p>
+<p>以分佈來看，該點愈接近中心點被抽到的機率會愈高，離中心愈遠被抽到的機率則愈低，因此黑點，New $x$離中心有點遠，被抽到的機率就會有點小。</p>
+<p>所以，如何找出$μ$與$Σ$就是一個問題，而找出它們的概念就是Maximum Likelihood。<br><img src="https://i.imgur.com/E5xklym.png"></p>
+<p>任何一個Gaussian Distribution都可以找出這79個點，只是可能性(Likelihood)不同。以右上分佈為例，它sample出左下角的機率很低，但不會為0。而要找出最大的$μ$與$Σ$，就必須用Likelihood function，即這79個點的乘積。<br><img src="https://i.imgur.com/SSFqGXU.png"></p>
+<h3 id="Maximum-Likelihood"><a href="#Maximum-Likelihood" class="headerlink" title="Maximum Likelihood"></a>Maximum Likelihood</h3><ul>
+<li>要找出最大的function，就必須找出最大的$μ$與$Σ$，即($μ^*$, $Σ^*$)<ul>
+<li>窮舉所有的$μ^*$和$Σ^*$，並找出最大的者：$μ^∗,Σ^∗$$=arg$ $\max\limits_{μ,Σ}L(μ,Σ)$</li>
+</ul>
+</li>
+</ul>
+<p>算出$μ^*$和$Σ^*$的方法就如同機率與統計的算法一樣。</p>
+<p><img src="https://i.imgur.com/3T3VdBB.png"></p>
+<p>有了上面的公式就可以求出兩個calss的各別$μ$與$Σ$，也就可以計算出$P(C1|X)$。<br><img src="https://i.imgur.com/zz9Iki7.png"></p>
+<h3 id="Now-we-can-do-classification"><a href="#Now-we-can-do-classification" class="headerlink" title="Now we can do classification"></a>Now we can do classification</h3><p>若$P(C1|X)&gt;0.5$，這個$x$就屬於class1<br><img src="https://i.imgur.com/tquUVzm.png"></p>
+<h3 id="How’s-the-results"><a href="#How’s-the-results" class="headerlink" title="How’s the results?"></a>How’s the results?</h3><p>由右上圖可明顯的看出來這二類別並未有個明顯的分界。即使考慮了額外的七個特徵(類別)，正確率也沒有明顯的提升。<br><img src="https://i.imgur.com/IspeQUG.png"></p>
+<h3 id="Modifying-Model"><a href="#Modifying-Model" class="headerlink" title="Modifying Model"></a>Modifying Model</h3><p>在實務上並不會讓每個高斯模型都擁有自己的$μ$和$Σ$，而是會共享參數，藉此減少參數的計算量。常見作法是不同類別有著相同的$Σ$。<br><img src="https://i.imgur.com/zlLaB7V.png"></p>
+<h3 id="Modifying-Model-2"><a href="#Modifying-Model-2" class="headerlink" title="Modifying Model-2"></a>Modifying Model-2</h3><p>調整式子，讓水系與一般系神奇寶貝擁有相同的covariance，計算它們的likelihood：</p>
+<ul>
+<li>$L(μ^1,μ^2,Σ)=f_{u^1,Σ}(x^1)f_{u^1,Σ}(x^2)…f_{u^1,Σ}(x^{79})f_{u^2,Σ}(x^{80})f_{u^2,Σ}(x^{81})…f_{u^2,Σ}(x^{140})$<br><img src="https://i.imgur.com/9QOa45k.png"></li>
+</ul>
+<h3 id="Modifying-Model-Result"><a href="#Modifying-Model-Result" class="headerlink" title="Modifying Model-Result"></a>Modifying Model-Result</h3><p>共用covariance之後，分界變為線性，這也稱為線性模型，並且考慮所有特徵之後正確率提升為73%。<br><img src="https://i.imgur.com/y92DAXi.png"></p>
+<h3 id="Three-Steps-Review"><a href="#Three-Steps-Review" class="headerlink" title="Three Steps(Review)"></a>Three Steps(Review)</h3><ul>
+<li>Model<ul>
+<li>有P(C1),P(C2),P(x|C1),P(x|C2)四種機率分佈，這就是模型的參數，只要你選不同的μ(mean)與Σ(covariance)，就會得到不同的機率分佈模型。</li>
+<li>P(C1)&gt;0.5, class=1</li>
+</ul>
+</li>
+<li>Goodness of a function<ul>
+<li>要得到最好的模型，就必須找到最大的$μ$與$Σ$，以Maximum Likelihood求得。<br><img src="https://i.imgur.com/7o8kfyX.png"></li>
+</ul>
+</li>
+</ul>
+<h3 id="Posterior-Probability"><a href="#Posterior-Probability" class="headerlink" title="Posterior Probability"></a>Posterior Probability</h3><p><img src="https://i.imgur.com/u0YNy0Q.png"></p>
+<hr>
+<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>假設$μ$與$Σ$為已知，將高斯函數在$z$展開並將共同係數提出整理，得：</p>
+<ul>
+<li><img src="https://i.imgur.com/gJSANQ1.png"></li>
+</ul>
+<p>可得知$P(C1|x)=σ(z)=σ(w⋅x+b)$，由此可證明當兩類別為同一分佈時，分界線會呈線性的。<br><img src="https://i.imgur.com/TxjMw0i.png"><br>以上計算步驟太繁瑣了，能不能直接得到w及b呢?-Logistic Regression</p>
+<hr>
+<h2 id="Lecture-5-Logistic-Regression"><a href="#Lecture-5-Logistic-Regression" class="headerlink" title="Lecture 5 Logistic Regression"></a>Lecture 5 Logistic Regression</h2><h3 id="Step-1：Function-Set"><a href="#Step-1：Function-Set" class="headerlink" title="Step 1：Function Set"></a>Step 1：Function Set</h3><p>我們要找posteriori probability，當機率$P_{w,b}(C_{1}|x)≥0.5$則輸出$C_{1}$，否則即輸出$C_{2}$。<br><img src="https://i.imgur.com/tHR8IYW.png"><br><img src="https://i.imgur.com/6fuJ2On.png"></p>
+<h3 id="Step-2-Goodness-of-a-Function"><a href="#Step-2-Goodness-of-a-Function" class="headerlink" title="Step 2: Goodness of a Function"></a>Step 2: Goodness of a Function</h3><p>設我們有任一組w,b可產生N筆Data($x^1 … x^N$)<br>與Chapter 4 進行Classification時相同，用Maximum Likelihood找w,b。<br><img src="https://i.imgur.com/Zi4bcLm.png"><br><img src="https://i.imgur.com/dxd6k0o.png"><br><img src="https://i.imgur.com/KM2cR5B.png"><br><img src="https://i.imgur.com/wzQBvmf.png"><br><img src="https://i.imgur.com/al3Xu4E.png"><br><img src="https://i.imgur.com/CPdoOEM.png"><br><img src="https://i.imgur.com/kHgsogx.png"></p>
+<h3 id="Comparison－Logistic-v-s-Linear"><a href="#Comparison－Logistic-v-s-Linear" class="headerlink" title="Comparison－Logistic v.s. Linear"></a>Comparison－Logistic v.s. Linear</h3><p>我們可以發現，在更新參數$w_{i}$ Logistic 和 Linear 是一樣的，差別在於輸出(紫色線部分)。前者輸出介於0到1之間，後者則可為任何數值。<br><img src="https://i.imgur.com/xCye0YO.png"></p>
+<h3 id="Limitation-of-Logistic-Regression"><a href="#Limitation-of-Logistic-Regression" class="headerlink" title="Limitation of Logistic Regression"></a>Limitation of Logistic Regression</h3><p>使用Regression分類就是找到一條直線去分類資料<br><img src="https://i.imgur.com/SlO2fj3.png"><br><img src="https://i.imgur.com/eHP27ys.png"><br>x1,x2為座標點，-0.5為bias $b$<br><img src="https://i.imgur.com/fbKKoXb.png"></p>
+<h3 id="XOR-Problem"><a href="#XOR-Problem" class="headerlink" title="XOR Problem"></a>XOR Problem</h3><p>但今天資料為分散的，就難以以一條線去做簡單分類。<br><img src="https://i.imgur.com/vLamyCp.png"><br><img src="https://i.imgur.com/KEbg8BQ.png"><br>這時我們就可將多一點的Regression疊在一起，輸出時再多加一層Regression來分類。<br><img src="https://i.imgur.com/YW2E6Lb.png"></p>
+<h3 id="That’s-Deep-Learning"><a href="#That’s-Deep-Learning" class="headerlink" title="That’s Deep Learning"></a>That’s Deep Learning</h3><p><img src="https://i.imgur.com/fl5PAeq.png"></p>
+<hr>
+<h2 id="補充：Perceptron-v-s-Logistic-Regression"><a href="#補充：Perceptron-v-s-Logistic-Regression" class="headerlink" title="補充：Perceptron v.s. Logistic Regression"></a>補充：Perceptron v.s. Logistic Regression</h2><p>傳統的Perceptron使用step function當作輸出。<br><img src="https://i.imgur.com/G01lWle.png"><br>因step function為非線性，難以用微分計算誤差，故改用Sigmoid $σ(in)$。<br><img src="https://i.imgur.com/m7una26.png"></p>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/TedYeh.github.io/2021/02/16/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ted Yeh</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="總字數">3k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="所需總閱讀時間">5 分鐘</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+<script src="/TedYeh.github.io/js/utils.js"></script><script src="/TedYeh.github.io/js/motion.js"></script><script src="/TedYeh.github.io/js/schemes/muse.js"></script><script src="/TedYeh.github.io/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+<script src="/TedYeh.github.io/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+    <div class="pjax">
+
+
+    </div>
+</body>
+</html>

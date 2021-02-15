@@ -1,9 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ML Lecture - Classification &amp; Logistic Regression</title>
+    <url>/TedYeh.github.io/2021/02/16/ML-Lecture-Classification-1/</url>
+    <content><![CDATA[<h2 id="Lecture-4-Classification"><a href="#Lecture-4-Classification" class="headerlink" title="Lecture 4 Classification"></a>Lecture 4 Classification</h2><p>在Classfication中，我們輸入一個X，而model告訴我們X的類別<br>ex. 機器翻譯、文法偵錯、臉部表情偵測…等</p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/3PDDWd7.png"></p>
+<p>得到寶可夢的特徵並數值化<br><img src="https://i.imgur.com/PGgqLwz.png"></p>
+<h3 id="example-of-Classification-Pokemon"><a href="#example-of-Classification-Pokemon" class="headerlink" title="example of Classification(Pokemon)"></a>example of Classification(Pokemon)</h3><p><img src="https://i.imgur.com/EKEi1kG.png"></p>
+<p>以二分類為例，我們可以使用Regression。<br>輸出為{1, -1}，即輸出為1到-1之間，接近1為class1，接近-1為class2。則我們以0為分界，若輸入大於0為class1，反之則為class2。<br><img src="https://i.imgur.com/yc07fRR.png"></p>
+<h3 id="Why-not-Regression"><a href="#Why-not-Regression" class="headerlink" title="Why not Regression"></a>Why not Regression</h3><p>在Linear Regression中，做Binary Classification是可行的。<br>但若資料是分群的(如右圖Class1)，則會造成model收斂於紫線(為了降低誤差)。<br><img src="https://i.imgur.com/xEiD5P8.png"></p>
+<h3 id="Ideal-Alternatives"><a href="#Ideal-Alternatives" class="headerlink" title="Ideal Alternatives"></a>Ideal Alternatives</h3><p>先定義一function f(x)，裡面有一g(x)。將x帶入g(x)，若g(x)&gt;0為類別1，否則為類別0。<br>定義Loss function L(f):f(x)分類錯誤的次數。<br><img src="https://i.imgur.com/cjh4lGp.png"></p>
+<h3 id="以機率模型實現"><a href="#以機率模型實現" class="headerlink" title="以機率模型實現"></a>以機率模型實現</h3><p>以箱子抽球為例<br><img src="https://i.imgur.com/ting6eJ.png"></p>
+<p>將Box變為class，給一個x(要分類的對象)，它屬於某個class的機率為何，我們需要知道：</p>
+<ul>
+<li>$P(C1)$:從class1抽出來的機率</li>
+<li>$P(C2)$:從class2抽出來的機率</li>
+<li>$P(x|C1)$:從class1抽出x的機率</li>
+<li>$P(x|C2)$:從class2抽出x的機率</li>
+</ul>
+<p>有了上面四種機率，就可以計算出$P(C1|x)$的機率(x是class1的機率)<br><img src="https://i.imgur.com/giY92h3.png"></p>
+<h3 id="example"><a href="#example" class="headerlink" title="example"></a>example</h3><p><img src="https://i.imgur.com/Qg6Q9bj.png"></p>
+<p>如何判斷一個未出現在training set的data的機率?<br><img src="https://i.imgur.com/VR5KvNW.png"></p>
+<p>假設從Gaussian中取出79個點，現在給一個新的點(不存在79個資料集中的新資料)，就可以利用Gaussian Distribution function來計算出抽到該點的機率。</p>
+<p>以分佈來看，該點愈接近中心點被抽到的機率會愈高，離中心愈遠被抽到的機率則愈低，因此黑點，New $x$離中心有點遠，被抽到的機率就會有點小。</p>
+<p>所以，如何找出$μ$與$Σ$就是一個問題，而找出它們的概念就是Maximum Likelihood。<br><img src="https://i.imgur.com/E5xklym.png"></p>
+<p>任何一個Gaussian Distribution都可以找出這79個點，只是可能性(Likelihood)不同。以右上分佈為例，它sample出左下角的機率很低，但不會為0。而要找出最大的$μ$與$Σ$，就必須用Likelihood function，即這79個點的乘積。<br><img src="https://i.imgur.com/SSFqGXU.png"></p>
+<h3 id="Maximum-Likelihood"><a href="#Maximum-Likelihood" class="headerlink" title="Maximum Likelihood"></a>Maximum Likelihood</h3><ul>
+<li>要找出最大的function，就必須找出最大的$μ$與$Σ$，即($μ^*$, $Σ^*$)<ul>
+<li>窮舉所有的$μ^*$和$Σ^*$，並找出最大的者：$μ^∗,Σ^∗$$=arg$ $\max\limits_{μ,Σ}L(μ,Σ)$</li>
+</ul>
+</li>
+</ul>
+<p>算出$μ^*$和$Σ^*$的方法就如同機率與統計的算法一樣。</p>
+<p><img src="https://i.imgur.com/3T3VdBB.png"></p>
+<p>有了上面的公式就可以求出兩個calss的各別$μ$與$Σ$，也就可以計算出$P(C1|X)$。<br><img src="https://i.imgur.com/zz9Iki7.png"></p>
+<h3 id="Now-we-can-do-classification"><a href="#Now-we-can-do-classification" class="headerlink" title="Now we can do classification"></a>Now we can do classification</h3><p>若$P(C1|X)&gt;0.5$，這個$x$就屬於class1<br><img src="https://i.imgur.com/tquUVzm.png"></p>
+<h3 id="How’s-the-results"><a href="#How’s-the-results" class="headerlink" title="How’s the results?"></a>How’s the results?</h3><p>由右上圖可明顯的看出來這二類別並未有個明顯的分界。即使考慮了額外的七個特徵(類別)，正確率也沒有明顯的提升。<br><img src="https://i.imgur.com/IspeQUG.png"></p>
+<h3 id="Modifying-Model"><a href="#Modifying-Model" class="headerlink" title="Modifying Model"></a>Modifying Model</h3><p>在實務上並不會讓每個高斯模型都擁有自己的$μ$和$Σ$，而是會共享參數，藉此減少參數的計算量。常見作法是不同類別有著相同的$Σ$。<br><img src="https://i.imgur.com/zlLaB7V.png"></p>
+<h3 id="Modifying-Model-2"><a href="#Modifying-Model-2" class="headerlink" title="Modifying Model-2"></a>Modifying Model-2</h3><p>調整式子，讓水系與一般系神奇寶貝擁有相同的covariance，計算它們的likelihood：</p>
+<ul>
+<li>$L(μ^1,μ^2,Σ)=f_{u^1,Σ}(x^1)f_{u^1,Σ}(x^2)…f_{u^1,Σ}(x^{79})f_{u^2,Σ}(x^{80})f_{u^2,Σ}(x^{81})…f_{u^2,Σ}(x^{140})$<br><img src="https://i.imgur.com/9QOa45k.png"></li>
+</ul>
+<h3 id="Modifying-Model-Result"><a href="#Modifying-Model-Result" class="headerlink" title="Modifying Model-Result"></a>Modifying Model-Result</h3><p>共用covariance之後，分界變為線性，這也稱為線性模型，並且考慮所有特徵之後正確率提升為73%。<br><img src="https://i.imgur.com/y92DAXi.png"></p>
+<h3 id="Three-Steps-Review"><a href="#Three-Steps-Review" class="headerlink" title="Three Steps(Review)"></a>Three Steps(Review)</h3><ul>
+<li>Model<ul>
+<li>有P(C1),P(C2),P(x|C1),P(x|C2)四種機率分佈，這就是模型的參數，只要你選不同的μ(mean)與Σ(covariance)，就會得到不同的機率分佈模型。</li>
+<li>P(C1)&gt;0.5, class=1</li>
+</ul>
+</li>
+<li>Goodness of a function<ul>
+<li>要得到最好的模型，就必須找到最大的$μ$與$Σ$，以Maximum Likelihood求得。<br><img src="https://i.imgur.com/7o8kfyX.png"></li>
+</ul>
+</li>
+</ul>
+<h3 id="Posterior-Probability"><a href="#Posterior-Probability" class="headerlink" title="Posterior Probability"></a>Posterior Probability</h3><p><img src="https://i.imgur.com/u0YNy0Q.png"></p>
+<hr>
+<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>假設$μ$與$Σ$為已知，將高斯函數在$z$展開並將共同係數提出整理，得：</p>
+<ul>
+<li><img src="https://i.imgur.com/gJSANQ1.png"></li>
+</ul>
+<p>可得知$P(C1|x)=σ(z)=σ(w⋅x+b)$，由此可證明當兩類別為同一分佈時，分界線會呈線性的。<br><img src="https://i.imgur.com/TxjMw0i.png"><br>以上計算步驟太繁瑣了，能不能直接得到w及b呢?-Logistic Regression</p>
+<hr>
+<h2 id="Lecture-5-Logistic-Regression"><a href="#Lecture-5-Logistic-Regression" class="headerlink" title="Lecture 5 Logistic Regression"></a>Lecture 5 Logistic Regression</h2><h3 id="Step-1：Function-Set"><a href="#Step-1：Function-Set" class="headerlink" title="Step 1：Function Set"></a>Step 1：Function Set</h3><p>我們要找posteriori probability，當機率$P_{w,b}(C_{1}|x)≥0.5$則輸出$C_{1}$，否則即輸出$C_{2}$。<br><img src="https://i.imgur.com/tHR8IYW.png"><br><img src="https://i.imgur.com/6fuJ2On.png"></p>
+<h3 id="Step-2-Goodness-of-a-Function"><a href="#Step-2-Goodness-of-a-Function" class="headerlink" title="Step 2: Goodness of a Function"></a>Step 2: Goodness of a Function</h3><p>設我們有任一組w,b可產生N筆Data($x^1 … x^N$)<br>與Chapter 4 進行Classification時相同，用Maximum Likelihood找w,b。<br><img src="https://i.imgur.com/Zi4bcLm.png"><br><img src="https://i.imgur.com/dxd6k0o.png"><br><img src="https://i.imgur.com/KM2cR5B.png"><br><img src="https://i.imgur.com/wzQBvmf.png"><br><img src="https://i.imgur.com/al3Xu4E.png"><br><img src="https://i.imgur.com/CPdoOEM.png"><br><img src="https://i.imgur.com/kHgsogx.png"></p>
+<h3 id="Comparison－Logistic-v-s-Linear"><a href="#Comparison－Logistic-v-s-Linear" class="headerlink" title="Comparison－Logistic v.s. Linear"></a>Comparison－Logistic v.s. Linear</h3><p>我們可以發現，在更新參數$w_{i}$ Logistic 和 Linear 是一樣的，差別在於輸出(紫色線部分)。前者輸出介於0到1之間，後者則可為任何數值。<br><img src="https://i.imgur.com/xCye0YO.png"></p>
+<h3 id="Limitation-of-Logistic-Regression"><a href="#Limitation-of-Logistic-Regression" class="headerlink" title="Limitation of Logistic Regression"></a>Limitation of Logistic Regression</h3><p>使用Regression分類就是找到一條直線去分類資料<br><img src="https://i.imgur.com/SlO2fj3.png"><br><img src="https://i.imgur.com/eHP27ys.png"><br>x1,x2為座標點，-0.5為bias $b$<br><img src="https://i.imgur.com/fbKKoXb.png"></p>
+<h3 id="XOR-Problem"><a href="#XOR-Problem" class="headerlink" title="XOR Problem"></a>XOR Problem</h3><p>但今天資料為分散的，就難以以一條線去做簡單分類。<br><img src="https://i.imgur.com/vLamyCp.png"><br><img src="https://i.imgur.com/KEbg8BQ.png"><br>這時我們就可將多一點的Regression疊在一起，輸出時再多加一層Regression來分類。<br><img src="https://i.imgur.com/YW2E6Lb.png"></p>
+<h3 id="That’s-Deep-Learning"><a href="#That’s-Deep-Learning" class="headerlink" title="That’s Deep Learning"></a>That’s Deep Learning</h3><p><img src="https://i.imgur.com/fl5PAeq.png"></p>
+<hr>
+<h2 id="補充：Perceptron-v-s-Logistic-Regression"><a href="#補充：Perceptron-v-s-Logistic-Regression" class="headerlink" title="補充：Perceptron v.s. Logistic Regression"></a>補充：Perceptron v.s. Logistic Regression</h2><p>傳統的Perceptron使用step function當作輸出。<br><img src="https://i.imgur.com/G01lWle.png"><br>因step function為非線性，難以用微分計算誤差，故改用Sigmoid $σ(in)$。<br><img src="https://i.imgur.com/m7una26.png"></p>
+<hr>
+]]></content>
+  </entry>
+  <entry>
     <title>Hello World</title>
-    <url>/TedYeh.github.io/2021/02/15/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+    <url>/TedYeh.github.io/2021/02/16/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. </p>
+<a id="more"></a>
+<p>Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
