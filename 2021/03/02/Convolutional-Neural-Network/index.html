@@ -23,31 +23,56 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"tedyeh.github.io","root":"/TedYeh.github.io/","images":"/TedYeh.github.io/images","scheme":"Muse","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/TedYeh.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="我的個人部落格，會有作品集和AI技術介紹">
-<meta property="og:type" content="website">
-<meta property="og:title" content="資工廢宅的異想世界">
-<meta property="og:url" content="https://tedyeh.github.io/index.html">
+<meta name="description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。 而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。 因為每個張圖含有某特徵的位">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML Lecture - Convolutional Neural Network">
+<meta property="og:url" content="https://tedyeh.github.io/2021/03/02/Convolutional-Neural-Network/index.html">
 <meta property="og:site_name" content="資工廢宅的異想世界">
-<meta property="og:description" content="我的個人部落格，會有作品集和AI技術介紹">
+<meta property="og:description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。 而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。 因為每個張圖含有某特徵的位">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/Qw1N7D1.png">
+<meta property="og:image" content="https://i.imgur.com/atBK7sP.png">
+<meta property="og:image" content="https://i.imgur.com/SFWt7lx.png">
+<meta property="og:image" content="https://i.imgur.com/MJ8ThrL.png">
+<meta property="og:image" content="https://i.imgur.com/EuUz0TJ.png">
+<meta property="og:image" content="https://i.imgur.com/N1UQQ7j.png">
+<meta property="og:image" content="https://i.imgur.com/yErRHqJ.png">
+<meta property="og:image" content="https://i.imgur.com/ITxekAY.png">
+<meta property="og:image" content="https://i.imgur.com/YnExjoA.png">
+<meta property="og:image" content="https://i.imgur.com/KONuGLO.png">
+<meta property="og:image" content="https://i.imgur.com/JEr7Ray.png">
+<meta property="og:image" content="https://i.imgur.com/uvzi1W6.png">
+<meta property="og:image" content="https://i.imgur.com/c2UmQEZ.png">
+<meta property="og:image" content="https://i.imgur.com/RnN63Qv.png">
+<meta property="og:image" content="https://i.imgur.com/z0KcOap.png">
+<meta property="og:image" content="https://i.imgur.com/auqaqF0.png">
+<meta property="og:image" content="https://i.imgur.com/iMYc5mX.png">
+<meta property="og:image" content="https://i.imgur.com/jcJirrb.png">
+<meta property="og:image" content="https://i.imgur.com/b3j5ulW.png">
+<meta property="og:image" content="https://i.imgur.com/oNsqZLT.png">
+<meta property="og:image" content="https://i.imgur.com/GnbY3dZ.png">
+<meta property="og:image" content="https://i.imgur.com/GQipP4x.png">
+<meta property="article:published_time" content="2021-03-02T11:12:53.000Z">
+<meta property="article:modified_time" content="2021-03-02T11:15:00.521Z">
 <meta property="article:author" content="Ted Yeh">
 <meta property="article:tag" content="Home Page, machine learning">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/Qw1N7D1.png">
 
 
-<link rel="canonical" href="https://tedyeh.github.io/">
+<link rel="canonical" href="https://tedyeh.github.io/2021/03/02/Convolutional-Neural-Network/">
 
 
 <script data-pjax class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-TW'
   };
 </script>
-<title>資工廢宅的異想世界</title>
+<title>ML Lecture - Convolutional Neural Network | 資工廢宅的異想世界</title>
   
 
 
@@ -165,7 +190,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目錄
@@ -178,6 +203,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ML-Lecture-Convolutional-Neural-Network"><span class="nav-number">1.</span> <span class="nav-text">ML Lecture - Convolutional Neural Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-Neural-Network-classify-image"><span class="nav-number">1.1.</span> <span class="nav-text">How Neural Network classify image?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-CNN-work"><span class="nav-number">1.2.</span> <span class="nav-text">How CNN work?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Convolution"><span class="nav-number">1.2.1.</span> <span class="nav-text">CNN-Convolution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Max-Pooling"><span class="nav-number">1.2.2.</span> <span class="nav-text">CNN-Max Pooling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Flatten"><span class="nav-number">1.2.3.</span> <span class="nav-text">CNN-Flatten</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-does-CNN-learn%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">What does CNN learn？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Dream"><span class="nav-number">1.4.</span> <span class="nav-text">Deep Dream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Style"><span class="nav-number">1.4.1.</span> <span class="nav-text">Deep Style</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#More-Application-Text"><span class="nav-number">1.5.</span> <span class="nav-text">More Application:Text</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -219,16 +245,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://tedyeh.github.io/2021/03/02/Convolutional-Neural-Network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,9 +268,9 @@
       <meta itemprop="name" content="資工廢宅的異想世界">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/TedYeh.github.io/2021/03/02/Convolutional-Neural-Network/" class="post-title-link" itemprop="url">ML Lecture - Convolutional Neural Network</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          ML Lecture - Convolutional Neural Network
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -283,7 +310,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。<br><img src="https://i.imgur.com/Qw1N7D1.png"></p>
+        <h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。<br><img src="https://i.imgur.com/Qw1N7D1.png"></p>
 <p>而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。<br><img src="https://i.imgur.com/atBK7sP.png"></p>
 <p>因為每個張圖含有某特徵的位置都不同，所以辨識同一特徵的neuron可共享同樣的參數。<br><img src="https://i.imgur.com/SFWt7lx.png"></p>
 <p>而我們可利用Subsampling將圖片縮小，如此也可減少參數計算量。</p>
@@ -327,7 +354,6 @@
 <p><img src="https://i.imgur.com/GnbY3dZ.png"></p>
 <h3 id="More-Application-Text"><a href="#More-Application-Text" class="headerlink" title="More Application:Text"></a>More Application:Text</h3><p>將輸入句的每個字轉成字向量並組成一序列矩陣，利用CNN得到該序列矩陣的feature map，並取Pooling即可將該句子分類。<br><img src="https://i.imgur.com/GQipP4x.png"></p>
 
-      
     </div>
 
     
@@ -335,193 +361,22 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tedyeh.github.io/2021/02/16/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/TedYeh.github.io/images/avatar.gif">
-      <meta itemprop="name" content="Ted Yeh">
-      <meta itemprop="description" content="我的個人部落格，會有作品集和AI技術介紹">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="資工廢宅的異想世界">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/TedYeh.github.io/2021/02/16/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-      
-
-      <time title="創建時間：2021-02-16 00:36:36 / 修改時間：00:36:42" itemprop="dateCreated datePublished" datetime="2021-02-16T00:36:36+08:00">2021-02-16</time>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>367</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>1 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/TedYeh.github.io/2021/02/16/hello-world/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tedyeh.github.io/2021/02/16/ML-Lecture-Classification-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/TedYeh.github.io/images/avatar.gif">
-      <meta itemprop="name" content="Ted Yeh">
-      <meta itemprop="description" content="我的個人部落格，會有作品集和AI技術介紹">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="資工廢宅的異想世界">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/TedYeh.github.io/2021/02/16/ML-Lecture-Classification-1/" class="post-title-link" itemprop="url">ML Lecture - Classification & Logistic Regression</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2021-02-16 00:28:06" itemprop="dateCreated datePublished" datetime="2021-02-16T00:28:06+08:00">2021-02-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新於</span>
-        <time title="修改時間：2021-03-02 19:14:35" itemprop="dateModified" datetime="2021-03-02T19:14:35+08:00">2021-03-02</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="文章字數">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">文章字數：</span>
-      <span>2.6k</span>
-    </span>
-    <span class="post-meta-item" title="所需閱讀時間">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">所需閱讀時間 &asymp;</span>
-      <span>5 分鐘</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>在Classfication中，我們輸入一個X，而model告訴我們X的類別<br>ex. 機器翻譯、文法偵錯、臉部表情偵測…等</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/TedYeh.github.io/2021/02/16/ML-Lecture-Classification-1/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/TedYeh.github.io/2021/02/16/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
+
 
 
 

@@ -1,9 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ML Lecture - Convolutional Neural Network</title>
+    <url>/TedYeh.github.io/2021/03/02/Convolutional-Neural-Network/</url>
+    <content><![CDATA[<h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。<br><img src="https://i.imgur.com/Qw1N7D1.png"></p>
+<p>而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。<br><img src="https://i.imgur.com/atBK7sP.png"></p>
+<p>因為每個張圖含有某特徵的位置都不同，所以辨識同一特徵的neuron可共享同樣的參數。<br><img src="https://i.imgur.com/SFWt7lx.png"></p>
+<p>而我們可利用Subsampling將圖片縮小，如此也可減少參數計算量。</p>
+<ul>
+<li>Subsampling：二次抽樣，如只取圖片的基數行、偶數列，如此可將圖片縮小。</li>
+</ul>
+<p><img src="https://i.imgur.com/MJ8ThrL.png"></p>
+<h3 id="How-CNN-work"><a href="#How-CNN-work" class="headerlink" title="How CNN work?"></a>How CNN work?</h3><p>整個CNN就分成Convolution、Max Pooling 及 Flatten這三步驟。<br><img src="https://i.imgur.com/EuUz0TJ.png"></p>
+<p>在使用CNN進行分類前，需注意：</p>
+<ul>
+<li>圖片中每個圖案(特徵)是很小的</li>
+<li>每個圖案會出現在不同圖的不同區域</li>
+<li>Subsampling不會改變原圖</li>
+</ul>
+<p><img src="https://i.imgur.com/N1UQQ7j.png"></p>
+<h4 id="CNN-Convolution"><a href="#CNN-Convolution" class="headerlink" title="CNN-Convolution"></a>CNN-Convolution</h4><p>每一個Convolution都會有很多個Filter，每一個Filter都是一個Matrix，代表一張image裡的某一區塊是否含有此一特徵。而Filter裡面的值就是神經網路中的學習參數。</p>
+<p>Filter透過stride(步伐)大小逐步在圖片中移動，並與覆蓋的位置做內積。<br>全部遊走一遍後可得一特徵圖(feature map)，即代表圖中的哪個部分含有該Filter的特徵。<br><img src="https://i.imgur.com/yErRHqJ.png"><br><img src="https://i.imgur.com/ITxekAY.png"></p>
+<p>Convolution就是將Fully Connected將部份weight拿掉而已:</p>
+<ul>
+<li>將圖片展開</li>
+<li>Filter與對應位置做內積運算<ul>
+<li><p>如3就是 Filter1 和第1、2、3、7、8、9、13、14、15位置內積</p>
+<p>因為Convolution只需連接Filter所對應的位置(如圖例就是9個位置)，故參數計算相對Fully Connected少。<br><img src="https://i.imgur.com/YnExjoA.png"><br><img src="https://i.imgur.com/KONuGLO.png"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="CNN-Max-Pooling"><a href="#CNN-Max-Pooling" class="headerlink" title="CNN-Max Pooling"></a>CNN-Max Pooling</h4><p>類似Subsampling，將feature map分群，並在每群中取最大值，得一較小的圖片(Matrix)。<br><img src="https://i.imgur.com/JEr7Ray.png"><br><img src="https://i.imgur.com/uvzi1W6.png"></p>
+<h4 id="CNN-Flatten"><a href="#CNN-Flatten" class="headerlink" title="CNN-Flatten"></a>CNN-Flatten</h4><p>將Matrix展開，變一維。如此即可輸入給Fully Connected Network做最後分類。<br><img src="https://i.imgur.com/c2UmQEZ.png"></p>
+<h3 id="What-does-CNN-learn？"><a href="#What-does-CNN-learn？" class="headerlink" title="What does CNN learn？"></a>What does CNN learn？</h3><p>為了分析CNN到底學到了甚麼，我們挑一個Filter，並定義其啟動函式來判定輸入(input)與這Filter有多相近。</p>
+<p>想了解filter的作用，我們找一張image(X)，它可以讓這個filter被啟動的程度最大。利用梯度上升(gradient ascent)來最大化啟動函數。<br><img src="https://i.imgur.com/RnN63Qv.png"><br><img src="https://i.imgur.com/z0KcOap.png"></p>
+<p>而後面的fully connected也可以以同樣的方式可視化。<br><img src="https://i.imgur.com/auqaqF0.png"></p>
+<p>將輸出層做可視化，發現結果與預期大不相同，但分類的結果卻是準確的(將8的照片做為輸入，模型確實預測為8)。代表CNN辨別圖片的方式與人不同。<br><img src="https://i.imgur.com/iMYc5mX.png"></p>
+<p>我們在找一個$x$讓 $y^i$ 最大化，相對的要讓x的元素加總最小，意思是我們希望找一個image大部份是白的，沒有塗上筆劃(黑)，以這個概念重新可視化之後整體的呈現就不同了。<br><img src="https://i.imgur.com/jcJirrb.png"></p>
+<h3 id="Deep-Dream"><a href="#Deep-Dream" class="headerlink" title="Deep Dream"></a>Deep Dream</h3><p>放大CNN所看的東西，將其視覺化並與原圖融合。<br>即取某層layer的Filter或fully connected的權重，將正項放大、負向縮小(正者越正，負者越負)。<br><img src="https://i.imgur.com/b3j5ulW.png"><br><img src="https://i.imgur.com/oNsqZLT.png"></p>
+<h4 id="Deep-Style"><a href="#Deep-Style" class="headerlink" title="Deep Style"></a>Deep Style</h4><ol>
+<li>將image輸入CNN得到一輸出表該image的內容。</li>
+<li>將風格照輸入CNN得到一輸出表該image的風格。</li>
+<li>隨機初始化一張照片，讓內容像左邊照片，風格像右邊照片。</li>
+</ol>
+<p><img src="https://i.imgur.com/GnbY3dZ.png"></p>
+<h3 id="More-Application-Text"><a href="#More-Application-Text" class="headerlink" title="More Application:Text"></a>More Application:Text</h3><p>將輸入句的每個字轉成字向量並組成一序列矩陣，利用CNN得到該序列矩陣的feature map，並取Pooling即可將該句子分類。<br><img src="https://i.imgur.com/GQipP4x.png"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>ML Lecture - Classification &amp; Logistic Regression</title>
     <url>/TedYeh.github.io/2021/02/16/ML-Lecture-Classification-1/</url>
-    <content><![CDATA[<h2 id="Lecture-4-Classification"><a href="#Lecture-4-Classification" class="headerlink" title="Lecture 4 Classification"></a>Lecture 4 Classification</h2><p>在Classfication中，我們輸入一個X，而model告訴我們X的類別<br>ex. 機器翻譯、文法偵錯、臉部表情偵測…等</p>
+    <content><![CDATA[<h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>在Classfication中，我們輸入一個X，而model告訴我們X的類別<br>ex. 機器翻譯、文法偵錯、臉部表情偵測…等</p>
 <a id="more"></a>
 <p><img src="https://i.imgur.com/3PDDWd7.png"></p>
 <p>得到寶可夢的特徵並數值化<br><img src="https://i.imgur.com/PGgqLwz.png"></p>
