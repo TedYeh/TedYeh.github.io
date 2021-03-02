@@ -21,14 +21,14 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"tedyeh.github.io","root":"/TedYeh.github.io/","images":"/TedYeh.github.io/images","scheme":"Muse","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/TedYeh.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"tedyeh.github.io","root":"/TedYeh.github.io/","images":"/TedYeh.github.io/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/TedYeh.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。">
+<meta name="description" content="tags: Hung-yi Lee ML LectureML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ML Lecture - Convolutional Neural Network">
 <meta property="og:url" content="https://tedyeh.github.io/2021/03/02/Convolutional-Neural-Network/index.html">
 <meta property="og:site_name" content="資工廢宅的異想世界">
-<meta property="og:description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。">
+<meta property="og:description" content="tags: Hung-yi Lee ML LectureML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/Qw1N7D1.png">
 <meta property="og:image" content="https://i.imgur.com/atBK7sP.png">
@@ -53,7 +53,7 @@
 <meta property="og:image" content="https://i.imgur.com/GnbY3dZ.png">
 <meta property="og:image" content="https://i.imgur.com/GQipP4x.png">
 <meta property="article:published_time" content="2021-03-02T11:12:53.000Z">
-<meta property="article:modified_time" content="2021-03-02T11:23:24.739Z">
+<meta property="article:modified_time" content="2021-03-02T17:01:48.421Z">
 <meta property="article:author" content="Ted Yeh">
 <meta property="article:tag" content="Home Page, machine learning">
 <meta name="twitter:card" content="summary">
@@ -123,6 +123,9 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -147,6 +150,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/TedYeh.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-archives"><a href="/TedYeh.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔<span class="badge">3</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/TedYeh.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類<span class="badge">0</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/TedYeh.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤<span class="badge">0</span></a></li>
+        <li class="menu-item menu-item-about"><a href="/TedYeh.github.io/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
         </a>
@@ -203,7 +211,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ML-Lecture-Convolutional-Neural-Network"><span class="nav-number">1.</span> <span class="nav-text">ML Lecture - Convolutional Neural Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-Neural-Network-classify-image"><span class="nav-number">1.1.</span> <span class="nav-text">How Neural Network classify image?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-CNN-work"><span class="nav-number">1.2.</span> <span class="nav-text">How CNN work?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Convolution"><span class="nav-number">1.2.1.</span> <span class="nav-text">CNN-Convolution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Max-Pooling"><span class="nav-number">1.2.2.</span> <span class="nav-text">CNN-Max Pooling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Flatten"><span class="nav-number">1.2.3.</span> <span class="nav-text">CNN-Flatten</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-does-CNN-learn%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">What does CNN learn？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Dream"><span class="nav-number">1.4.</span> <span class="nav-text">Deep Dream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Style"><span class="nav-number">1.4.1.</span> <span class="nav-text">Deep Style</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#More-Application-Text"><span class="nav-number">1.5.</span> <span class="nav-text">More Application:Text</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#tags-Hung-yi-Lee-ML-Lecture"><span class="nav-number">1.</span> <span class="nav-text">tags: Hung-yi Lee ML Lecture</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ML-Lecture-Convolutional-Neural-Network"><span class="nav-number"></span> <span class="nav-text">ML Lecture - Convolutional Neural Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-Neural-Network-classify-image"><span class="nav-number"></span> <span class="nav-text">How Neural Network classify image?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-CNN-work"><span class="nav-number"></span> <span class="nav-text">How CNN work?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Convolution"><span class="nav-number"></span> <span class="nav-text">CNN-Convolution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Max-Pooling"><span class="nav-number"></span> <span class="nav-text">CNN-Max Pooling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN-Flatten"><span class="nav-number"></span> <span class="nav-text">CNN-Flatten</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-does-CNN-learn%EF%BC%9F"><span class="nav-number"></span> <span class="nav-text">What does CNN learn？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Dream"><span class="nav-number"></span> <span class="nav-text">Deep Dream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Style"><span class="nav-number"></span> <span class="nav-text">Deep Style</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#More-Application-Text"><span class="nav-number"></span> <span class="nav-text">More Application:Text</span></a></div>
         </div>
         <!--/noindex-->
 
@@ -215,13 +223,28 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/TedYeh.github.io/archives">
+          <a href="/TedYeh.github.io/archives/">
+        
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TedYeh" title="Github → https:&#x2F;&#x2F;github.com&#x2F;TedYeh" rel="noopener" target="_blank">Github</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kmes50215@gmail.com" title="E-Mail → mailto:kmes50215@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/_.cheng.hung/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;_.cheng.hung&#x2F;" rel="noopener" target="_blank">Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/ted.yeh.395/" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;ted.yeh.395&#x2F;" rel="noopener" target="_blank">FB Page</a>
+      </span>
+  </div>
 
 
 
@@ -279,10 +302,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">發表於</span>
-      
 
-      <time title="創建時間：2021-03-02 19:12:53 / 修改時間：19:23:24" itemprop="dateCreated datePublished" datetime="2021-03-02T19:12:53+08:00">2021-03-02</time>
+      <time title="創建時間：2021-03-02 19:12:53" itemprop="dateCreated datePublished" datetime="2021-03-02T19:12:53+08:00">2021-03-02</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2021-03-03 01:01:48" itemprop="dateModified" datetime="2021-03-03T01:01:48+08:00">2021-03-03</time>
+      </span>
 
   
       </div>
@@ -310,7 +339,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。</p>
+        <h6 id="tags-Hung-yi-Lee-ML-Lecture"><a href="#tags-Hung-yi-Lee-ML-Lecture" class="headerlink" title="tags: Hung-yi Lee ML Lecture"></a>tags: <code>Hung-yi Lee ML Lecture</code></h6><h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。</p>
 <a id="more"></a>
 <p><img src="https://i.imgur.com/Qw1N7D1.png"></p>
 <p>而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。<br><img src="https://i.imgur.com/atBK7sP.png"></p>
@@ -426,7 +455,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="總字數">4k</span>
+    <span title="總字數">5k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
@@ -435,7 +464,7 @@
     <span title="所需總閱讀時間">8 分鐘</span>
   </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
   </div>
 
     </div>
@@ -444,7 +473,7 @@
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-<script src="/TedYeh.github.io/js/utils.js"></script><script src="/TedYeh.github.io/js/motion.js"></script><script src="/TedYeh.github.io/js/schemes/muse.js"></script><script src="/TedYeh.github.io/js/next-boot.js"></script><script>
+<script src="/TedYeh.github.io/js/utils.js"></script><script src="/TedYeh.github.io/js/motion.js"></script><script src="/TedYeh.github.io/js/next-boot.js"></script><script>
 var pjax = new Pjax({
   selectors: [
     'head title',
