@@ -3,7 +3,9 @@
   <entry>
     <title>ML Lecture - Convolutional Neural Network</title>
     <url>/TedYeh.github.io/2021/03/02/Convolutional-Neural-Network/</url>
-    <content><![CDATA[<h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。<br><img src="https://i.imgur.com/Qw1N7D1.png"></p>
+    <content><![CDATA[<h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。</p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/Qw1N7D1.png"></p>
 <p>而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。<br><img src="https://i.imgur.com/atBK7sP.png"></p>
 <p>因為每個張圖含有某特徵的位置都不同，所以辨識同一特徵的neuron可共享同樣的參數。<br><img src="https://i.imgur.com/SFWt7lx.png"></p>
 <p>而我們可利用Subsampling將圖片縮小，如此也可減少參數計算量。</p>

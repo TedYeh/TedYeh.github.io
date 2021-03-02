@@ -23,12 +23,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"tedyeh.github.io","root":"/TedYeh.github.io/","images":"/TedYeh.github.io/images","scheme":"Muse","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/TedYeh.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。 而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。 因為每個張圖含有某特徵的位">
+<meta name="description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ML Lecture - Convolutional Neural Network">
 <meta property="og:url" content="https://tedyeh.github.io/2021/03/02/Convolutional-Neural-Network/index.html">
 <meta property="og:site_name" content="資工廢宅的異想世界">
-<meta property="og:description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。 而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。 因為每個張圖含有某特徵的位">
+<meta property="og:description" content="ML Lecture - Convolutional Neural NetworkHow Neural Network classify image?在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/Qw1N7D1.png">
 <meta property="og:image" content="https://i.imgur.com/atBK7sP.png">
@@ -53,7 +53,7 @@
 <meta property="og:image" content="https://i.imgur.com/GnbY3dZ.png">
 <meta property="og:image" content="https://i.imgur.com/GQipP4x.png">
 <meta property="article:published_time" content="2021-03-02T11:12:53.000Z">
-<meta property="article:modified_time" content="2021-03-02T11:15:00.521Z">
+<meta property="article:modified_time" content="2021-03-02T11:23:24.739Z">
 <meta property="article:author" content="Ted Yeh">
 <meta property="article:tag" content="Home Page, machine learning">
 <meta name="twitter:card" content="summary">
@@ -281,7 +281,7 @@
       <span class="post-meta-item-text">發表於</span>
       
 
-      <time title="創建時間：2021-03-02 19:12:53 / 修改時間：19:15:00" itemprop="dateCreated datePublished" datetime="2021-03-02T19:12:53+08:00">2021-03-02</time>
+      <time title="創建時間：2021-03-02 19:12:53 / 修改時間：19:23:24" itemprop="dateCreated datePublished" datetime="2021-03-02T19:12:53+08:00">2021-03-02</time>
     </span>
 
   
@@ -310,7 +310,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。<br><img src="https://i.imgur.com/Qw1N7D1.png"></p>
+        <h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。</p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/Qw1N7D1.png"></p>
 <p>而在做影像分類時，每個neuron只需觀察圖像中的一小部分是否含有某特徵即可，不須看完整張圖。<br><img src="https://i.imgur.com/atBK7sP.png"></p>
 <p>因為每個張圖含有某特徵的位置都不同，所以辨識同一特徵的neuron可共享同樣的參數。<br><img src="https://i.imgur.com/SFWt7lx.png"></p>
 <p>而我們可利用Subsampling將圖片縮小，如此也可減少參數計算量。</p>
