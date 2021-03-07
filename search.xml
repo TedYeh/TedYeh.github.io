@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>ML Lecture - Convolutional Neural Network</title>
-    <url>/TedYeh.github.io/2021/03/02/Convolutional-Neural-Network/</url>
+    <url>/2021/03/02/Convolutional-Neural-Network/</url>
     <content><![CDATA[<h6 id="tags-Hung-yi-Lee-ML-Lecture"><a href="#tags-Hung-yi-Lee-ML-Lecture" class="headerlink" title="tags: Hung-yi Lee ML Lecture"></a>tags: <code>Hung-yi Lee ML Lecture</code></h6><h2 id="ML-Lecture-Convolutional-Neural-Network"><a href="#ML-Lecture-Convolutional-Neural-Network" class="headerlink" title="ML Lecture - Convolutional Neural Network"></a>ML Lecture - Convolutional Neural Network</h2><h3 id="How-Neural-Network-classify-image"><a href="#How-Neural-Network-classify-image" class="headerlink" title="How Neural Network classify image?"></a>How Neural Network classify image?</h3><p>在原先的DNN中，每個neuron就是在做不同的特徵分類，每層要進行的分類工作會越來越複雜(同Modularization)。</p>
 <a id="more"></a>
 <p><img src="https://i.imgur.com/Qw1N7D1.png"></p>
@@ -52,7 +52,7 @@
   </entry>
   <entry>
     <title>ML Lecture - Classification &amp; Logistic Regression</title>
-    <url>/TedYeh.github.io/2021/02/16/ML-Lecture-Classification-1/</url>
+    <url>/2021/02/16/ML-Lecture-Classification-1/</url>
     <content><![CDATA[<h6 id="tags-Hung-yi-Lee-ML-Lecture"><a href="#tags-Hung-yi-Lee-ML-Lecture" class="headerlink" title="tags: Hung-yi Lee ML Lecture"></a>tags: <code>Hung-yi Lee ML Lecture</code></h6><h2 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h2><p>在Classfication中，我們輸入一個X，而model告訴我們X的類別<br>ex. 機器翻譯、文法偵錯、臉部表情偵測…等</p>
 <a id="more"></a>
 <p><img src="https://i.imgur.com/3PDDWd7.png"></p>
@@ -125,7 +125,7 @@
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/TedYeh.github.io/2021/02/16/hello-world/</url>
+    <url>/2021/02/16/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. </p>
 <a id="more"></a>
 <p>Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
